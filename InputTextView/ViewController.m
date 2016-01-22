@@ -5,6 +5,10 @@
 //  Created by LiMingjie on 16/1/21.
 //  Copyright © 2016年 iOS开发者公会. All rights reserved.
 //
+//  iOS开发者公会-技术1群 QQ群号：87440292
+//  iOS开发者公会-技术2群 QQ群号：232702419
+//  iOS开发者公会-议事区  QQ群号：413102158
+//
 
 #import "ViewController.h"
 
@@ -30,7 +34,7 @@
     _inputTextView.backgroundColor        = [UIColor lightGrayColor];
     _inputTextView.textColor              = [UIColor greenColor];
     _inputTextView.placeholder            = @"请在这里输入字符串";
-//    _inputTextView.placeholderColor       = [UIColor redColor];
+    _inputTextView.placeholderColor       = [UIColor redColor];
     _inputTextView.inputReturnHideKeybord = YES;
     [self.view addSubview:_inputTextView];
     
