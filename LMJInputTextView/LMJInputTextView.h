@@ -2,7 +2,9 @@
 //  LMJInputTextView.h
 //  InputTextView
 //
-//  Created by LiMingjie on 16/1/21.
+//  Version:1.0.0
+//
+//  Created by MajorLi on 16/1/21.
 //  Copyright © 2016年 iOS开发者公会. All rights reserved.
 //
 //  iOS开发者公会-技术1群 QQ群号：87440292
