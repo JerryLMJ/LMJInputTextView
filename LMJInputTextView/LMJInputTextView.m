@@ -2,7 +2,7 @@
 //  LMJInputTextView.m
 //  InputTextView
 //
-//  Version:1.0.0
+//  Version:1.1.0
 //
 //  Created by MajorLi on 16/1/21.
 //  Copyright © 2016年 iOS开发者公会. All rights reserved.
@@ -101,11 +101,27 @@
     _textView.font = font;
 }
 
+- (void)setContentInsets:(UIEdgeInsets)contentInsets{
+    _contentInsets = contentInsets;
+    
+    [_textView setFrame:CGRectMake(contentInsets.left, contentInsets.top, self.frame.size.width -contentInsets.left -contentInsets.right, self.frame.size.height -contentInsets.top -contentInsets.bottom)];
+}
+
 #pragma mark - UITextView Delegate
 - (void)textViewDidBeginEditing:(UITextView *)textView{
     if ([_textView.text isEqualToString:self.placeholder]) {
         _textView.text      = @"";
         _textView.textColor = self.textColor;
+        
+        
+        if ([self.delegate respondsToSelector:@selector(inputTextView:didBeginEditingWithCurrentText:)]) {
+            [self.delegate inputTextView:self didBeginEditingWithCurrentText:@""];
+        }
+    }else{
+        
+        if ([self.delegate respondsToSelector:@selector(inputTextView:didBeginEditingWithCurrentText:)]) {
+            [self.delegate inputTextView:self didBeginEditingWithCurrentText:textView.text];
+        }
     }
 }
 
@@ -113,6 +129,15 @@
     if (textView.text.length == 0) {
         _textView.text      = _placeholder;
         _textView.textColor = _placeholderColor;
+        
+        if ([self.delegate respondsToSelector:@selector(inputTextView:didEndEditingWithCurrentText:)]) {
+            [self.delegate inputTextView:self didEndEditingWithCurrentText:@""];
+        }
+    }else{
+        
+        if ([self.delegate respondsToSelector:@selector(inputTextView:didEndEditingWithCurrentText:)]) {
+            [self.delegate inputTextView:self didEndEditingWithCurrentText:textView.text];
+        }
     }
 }
 - (void)textViewDidChange:(UITextView *)textView{
@@ -120,17 +145,30 @@
         return;
     }
     
-    if ([_textView.text hasSuffix:@"\n"] == YES) {
+    if ([textView.text hasSuffix:@"\n"] == YES) {
         
         if (_inputReturnHideKeybord == YES) {
             
-            _textView.text = [_textView.text substringToIndex:(_textView.text.length -1)];
-            [_textView resignFirstResponder];
+            textView.text = [textView.text substringToIndex:(_textView.text.length -1)];
+            [textView resignFirstResponder];
             
         }else{
             
         }
     }
+    
+    if ([_textView.text isEqualToString:self.placeholder]) {
+        
+        if ([self.delegate respondsToSelector:@selector(inputTextView:didChangeWithCurrentText:)]) {
+            [self.delegate inputTextView:self didChangeWithCurrentText:@""];
+        }
+    }else{
+        
+        if ([self.delegate respondsToSelector:@selector(inputTextView:didChangeWithCurrentText:)]) {
+            [self.delegate inputTextView:self didChangeWithCurrentText:textView.text];
+        }
+    }
+    
     
 }
 

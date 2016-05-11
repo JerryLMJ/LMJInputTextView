@@ -2,7 +2,7 @@
 //  LMJInputTextView.h
 //  InputTextView
 //
-//  Version:1.0.0
+//  Version:1.1.0
 //
 //  Created by MajorLi on 16/1/21.
 //  Copyright © 2016年 iOS开发者公会. All rights reserved.
@@ -14,7 +14,27 @@
 
 #import <UIKit/UIKit.h>
 
+@class LMJInputTextView;
+
+@protocol LMJInputTextViewDelegate <NSObject>
+
+@optional
+
+// 编辑开始调用
+- (void)inputTextView:(LMJInputTextView *)inputTextView didBeginEditingWithCurrentText:(NSString *)text;
+// 编辑结束调用
+- (void)inputTextView:(LMJInputTextView *)inputTextView didEndEditingWithCurrentText:(NSString *)text;
+
+// 文本变化调用
+- (void)inputTextView:(LMJInputTextView *)inputTextView didChangeWithCurrentText:(NSString *)text;
+
+@end
+
+
+
 @interface LMJInputTextView : UIView <UITextViewDelegate>
+
+@property (nonatomic,assign) id <LMJInputTextViewDelegate> delegate;
 
 // 输入内容
 @property (nonatomic,readonly) NSString * text;
@@ -30,6 +50,9 @@
 
 // 占位符颜色
 @property (nonatomic,strong)   UIColor  * placeholderColor;
+
+// 内容与边界的间距
+@property (nonatomic,assign)   UIEdgeInsets contentInsets;
 
 // 输入换行是否隐藏键盘
 @property (nonatomic,assign)   BOOL       inputReturnHideKeybord;

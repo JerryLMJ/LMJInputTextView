@@ -14,7 +14,7 @@
 
 #import "LMJInputTextView.h"
 
-@interface ViewController ()
+@interface ViewController () <LMJInputTextViewDelegate>
 {
     LMJInputTextView * _inputTextView;
 }
@@ -25,17 +25,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
     [self createInputTextView];
 }
 
 - (void)createInputTextView{
     _inputTextView = [[LMJInputTextView alloc] initWithFrame:CGRectMake(20, 50, [UIScreen mainScreen].bounds.size.width - 40, 200)];
+    _inputTextView.contentInsets          = UIEdgeInsetsMake(10, 20, 0, 20);
     _inputTextView.backgroundColor        = [UIColor lightGrayColor];
     _inputTextView.textColor              = [UIColor greenColor];
     _inputTextView.placeholder            = @"请在这里输入字符串";
     _inputTextView.placeholderColor       = [UIColor redColor];
     _inputTextView.inputReturnHideKeybord = YES;
+    _inputTextView.delegate               = self;
+    _inputTextView.font                   = [UIFont boldSystemFontOfSize:20];
+    
     [self.view addSubview:_inputTextView];
     
     
@@ -52,6 +55,23 @@
 - (void)printTextViewText{
     NSLog(@"Text:%@",_inputTextView.text);
 }
+
+
+
+#pragma mark - LMJInputTextView Delegate
+
+- (void)inputTextView:(LMJInputTextView *)inputTextView didBeginEditingWithCurrentText:(NSString *)text{
+    NSLog(@"begin:%@",text);
+}
+
+- (void)inputTextView:(LMJInputTextView *)inputTextView didChangeWithCurrentText:(NSString *)text{
+    NSLog(@"change:%@",text);
+}
+
+- (void)inputTextView:(LMJInputTextView *)inputTextView didEndEditingWithCurrentText:(NSString *)text{
+    NSLog(@"end:%@",text);
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
